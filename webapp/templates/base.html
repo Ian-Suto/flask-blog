@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+        {% block styles %}
+            {{ bootstrap.load_css() }}
+        {% endblock %}
+        <title>{% block title %}Blog{% endblock %}</title>
+        {% endblock %}
+    </head>
+    <body>
+        {% include 'navbar.html' %}
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    {% include 'head.html' %}
+                </div>
+            </div>
+            <div class="p-4 shadow-sm">
+                <div class="row">
+                    Session: {{ session }} Global: {{ g.random_key }} Request: {{ request }}
+                </div>
+            </div>
+            {% include 'messages.html' %}
+            {% block body %}
+            <div class="row">
+                <div class="col-lg-9">
+                    {% block leftbody %}
+                    {% endblock %}
+                </div>
+                <div class="col-lg-3 rounded">
+                    {% block rightbody %}
+                    {% include 'rightbody.html' %}
+                    {% endblock %}
+                </div>
+            </div>
+            {% endblock %}
+            {% include 'footer.html' %}
+        </div>
+        {% block scripts %}
+            {{ bootstrap.load_js() }}
+            {{ moment.include_moment() }}
+            {{ moment.lang(g.locale) }}
+            <!-- reCaptcha Integration -->
+            <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+        {% endblock %}
+    </body>
+</html>

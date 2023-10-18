@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% from 'bootstrap4/form.html' import render_form %}
+{% block title %}Login{% endblock %}
+{% block body %}
+    <div class='row'>
+        <div class="col-md-4">
+            <h1 class='text-center'>Login</h1>
+            {{ render_form(form) }}
+            <hr>
+            <h2 class="text-center">Register With OpenID</h2>
+            <form method="POST" action="{{ url_for('.register') }}">
+                {{ openid_form.hidden_tag() }}
+                <div class="form-group">
+                    {{ openid_form.openid.label }}
+                    {% if openid_form.openid.errors %}
+                        {% for e in openid_form.openid.errors %}
+                            <p class="help-block">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ openid_form.openid(class_='form-control') }}
+                </div>
+                <input class="btn btn-primary" type="submit" value="Register">
+            </form>
+            <h2 class="text-center">Register/Login With google</h2>
+            <a href="{{ url_for('google.login') }}">Login</a>
+
+            <h2 class="text-center">Register/Login With github</h2>
+            <a href="{{ url_for('github.login') }}">Login</a>
+
+        </div>
+    </div>
+{% endblock %}
