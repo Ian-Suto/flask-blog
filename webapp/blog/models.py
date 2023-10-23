@@ -1,5 +1,6 @@
 from .. import db
 import datetime
+from hashlib import sha256, md5
 tags = db.Table(
     'post_tags',
     db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
@@ -32,6 +33,12 @@ class Comment(db.Model):
 
     def __repr__(self):
         return "<Comment '{}'>".format(self.text[:15])
+    
+    def avatar(self, size):
+        digest = sha256(self.name.lower().encode('utf-8')).hexdigest()
+        return "https://www.gravatar.com/avatar/{}?d=identicon&s={}".format(
+            digest, size
+        )
     
 class Tag(db.Model):
     id = db.Column(db.Integer(), primary_key=True)

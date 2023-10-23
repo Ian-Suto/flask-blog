@@ -28,7 +28,7 @@ class DevConfig(Config):
     SQLALCHEMY_ECHO = True
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_RECORD_QUERIES = True
-    CACHE_TYPE = 'null'
+    CACHE_TYPE = 'NullCache'
 
 class TestConfig(Config):
     DEBUG = True

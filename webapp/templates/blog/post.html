@@ -69,15 +69,13 @@
             {% if comments | length == 0 %}
             <p>There are no comments for this post</p>
             {% else %}
-                {% for comment in comments %}
-                <table>
-                    <tr valign="top">
-                        
-                        <td>By: {{ comment.name }} on {{ moment(comment.date).fromNow() }}</td>
-                        <td>{{ comment.text }}</td>
-                    </tr>
-                </table>
-                {% endfor %}
+            {% for comment in comments %}
+            <div class="shadow-sm p-2">
+                <img src="{{ comment.avatar(70) }}">
+                <dt>Comment by: {{ comment.name }}, {{ moment(comment.date).fromNow() }}</dt>
+                <dd>{{ comment.text }}</dd>
+            </div>
+            {% endfor %}
             {% endif %}
         </div>
     </div>

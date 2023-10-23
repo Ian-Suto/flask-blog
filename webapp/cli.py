@@ -85,7 +85,7 @@ def generate_posts(n, users, tags):
         post = Post()
         post.title = faker.sentence()
         post.text = faker.text(max_nb_chars=1000)
-        post.publish_date = faker.date_this_century(before_today=True, after_today=False)
+        post.publish_date = faker.date_this_decade(before_today=True, after_today=False)
         post.user_id = users[random.randrange(0, len(users))].id
         post.tags = [tags[random.randrange(0, len(tags))] for i in range(0, 2)]
 
@@ -107,7 +107,7 @@ def generate_comments(users, posts):
             comment = Comment()
             comment.name = users[random.randrange(0, len(users))].username
             comment.text = faker.sentence()
-            comment.date = faker.date_this_century(before_today=True, after_today=False)
+            comment.date = faker.date_this_decade(before_today=True, after_today=False)
             comment.post_id = posts[random.randrange(0, 100)].id
             try:
                 db.session.add(comment)

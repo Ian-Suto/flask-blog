@@ -1,9 +1,9 @@
 from flask_login import UserMixin
 from . import bcrypt, AnonymousUserMixin
 from .. import db, cache
-from hashlib import sha256
 from datetime import datetime
 from ..blog.models import Post
+from hashlib import sha256
 
 roles = db.Table(
     'role_users',
@@ -46,6 +46,13 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+    def avatar(self, size):
+        digest = sha256(self.username.lower().encode('utf-8')).hexdigest()
+        return "https://www.gravatar.com/avatar/{}?d=identicon&s={}".format(
+            digest, size
+        )
+    
     
     @cache.memoize(60)
     def has_role(self, name):
@@ -60,11 +67,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
     
-    def avatar(self, size):
-        digest = sha256(self.username.lower().encode('utf-8')).hexdigest()
-        return "https://www.gravatar.com/avatar/{}?d=monsterid&s={}".format(
-            digest, size
-        )
+    
 
     def follow(self, user):
         if not self.is_following(user):
@@ -84,7 +87,7 @@ class User(UserMixin, db.Model):
             followers, (followers.c.followed_id == Post.user_id)).filter(
             followers.c.follower_id == self.id)
         own = Post.query.filter_by(user_id=self.id)
-        return followed.union(own).order_by(Post.timestamp.desc())
+        return followed.union(own).order_by(Post.publish_date.desc())
 
     @property
     def is_authenticated(self):

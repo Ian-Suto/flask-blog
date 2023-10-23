@@ -98,10 +98,17 @@ def follow(username):
             return redirect(url_for('user', username=username))
         current_user.follow(user)
         db.session.commit()
-        flash(_('You are following %{username}!', username=username))
-        return redirect(url_for('user', username=username))
+        flash(_('You are following %(username)s!', username=username))
+        return redirect(url_for('auth.profile', username=username))
     else:
         return redirect(url_for('index'))
+    
+@auth_blueprint.route('/profile/<username>')
+@login_required
+def profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    form = EmptyForm()
+    return render_template('profile.html', user=user, form=form)
     
 @auth_blueprint.route('/unfollow/<username>', methods=['POST'])
 @login_required
@@ -118,9 +125,16 @@ def unfollow(username):
         current_user.follow(user)
         db.session.commit()
         flash(_('You are no longer following %{username}!', username=username))
-        return redirect(url_for('user', username=username))
+        return redirect(url_for('auth.profile', username=username))
     else:
         return redirect(url_for('index'))
+
+@auth_blueprint.route('/user_profiles')
+@login_required
+def user_profiles():
+    users = User.query.all()
+    form = EmptyForm()
+    return render_template('user_profiles.html', users=users, form=form)
 
 
 
