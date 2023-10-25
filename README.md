@@ -5,6 +5,7 @@ This is a Blogging site developed with Python and the Flask microframework. It a
 ## Installation
 Install the project with 
 ```bash
+  $ git clone https://github.com/Ian-Musima/flask-blog.git
   $ python -m venv env
   $ source env/Scripts/activate
   $ ./init.sh
@@ -61,15 +62,15 @@ To get all the comments at a particular page:
 ```bash
 $ curl -H "Authorization: Bearer $ACCESS" "http://localhost:5000/api/comment?page=1"
 ```
-To create a new comment on a post:
+To edit a particular comment:
 ```bash
 $ curl -X PUT -H "Authorization: Bearer $ACCESS" -H "Content-Type: application/json" -d '{"name":"user_poster", "text":"Modified from RESTAPI"}' "http://localhost:5000/api/comment/315"
 ```
-To edit a particular comment:
+To create a new comment on a post:
 ```bash
-$ curl -X PUT -H "Authorization: Bearer $ACCESS" -H "Content-Type:
+$ curl -X POST -H "Authorization: Bearer $ACCESS" -H "Content-Type:
 application/json" \
- -d '{"name": "user_poster", "text": "this is from RESTAPI"}' http://localhost:5000/api/post/5
+ -d '{"name": "user_poster", "text": "this is from RESTAPI"}' 'http://localhost:5000/api/post/5/comments'
 ```
 To delete a particular comment:
 ```bash
