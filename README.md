@@ -1,7 +1,7 @@
 
 # Blog-App
 ## Description
-This is a Blogging site developed with Python and the Flask microframework. It allows users to create profiles about themselves, follow other users whose posts they like, comment on posts and edit their own posts. It is embedded with RESTful API allowing users to create, edit and delete posts or commands.
+This is a Blogging application developed with Python and the Flask microframework. It allows users to create profiles about themselves, follow other users whose posts they like, comment on posts and edit their own posts. It also includes a RESTful API, allowing users to create, edit and delete posts or comments.
 ## Installation
 Install the project with 
 ```bash
