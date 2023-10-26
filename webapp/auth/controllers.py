@@ -149,7 +149,7 @@ def follow(username):
         current_user.follow(user)
         db.session.commit()
         flash(_('You are following %(username)s!', username=username))
-        return redirect(url_for('auth.profile', username=username))
+        return redirect(url_for('auth.user_profiles', username=username))
     else:
         return redirect(url_for('index'))
     
@@ -174,12 +174,12 @@ def unfollow(username):
         if user == current_user:
             flash(_('You cannot unfollow yourself!'))
             return redirect(url_for('user', username=username))
-        current_user.follow(user)
+        current_user.unfollow(user)
         db.session.commit()
-        flash(_('You are no longer following %{username}!', username=username))
-        return redirect(url_for('auth.profile', username=username))
+        flash(_('You are no longer following %(username)s!', username=username))
+        return redirect(url_for('auth.user_profiles', username=username))
     else:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
 
 @auth_blueprint.route('/user_profiles')
 @login_required
