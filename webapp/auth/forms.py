@@ -27,16 +27,15 @@ class LoginForm(FlaskForm):
             return False
         return True
 
-class OpenIDForm(FlaskForm):
-    openid = StringField('OpenID URL', [DataRequired(), URL()])
 
 class RegisterForm(FlaskForm):
     username = StringField(_l('Username'), [DataRequired(), Length(max=255)])
     password = PasswordField(_l('Password'), [DataRequired(), Length(min=8)])
     confirm = PasswordField(_l('Confirm Password'), [DataRequired(), EqualTo('password')])
     recaptcha = RecaptchaField()
+    sumbmit = SubmitField(_l('Register'))
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         check_validate = super(RegisterForm, self).validate()
 
         if not check_validate:
@@ -55,7 +54,7 @@ class EditProfileForm(FlaskForm):
     about_me = StringField(_l('About me'), [Length(min=0, max=140)])
     sumbmit = SubmitField(_l('Submit'))
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         check_validate = super(EditProfileForm, self).validate()
 
         if not check_validate:

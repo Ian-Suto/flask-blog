@@ -122,16 +122,5 @@ class TestURLs(unittest.TestCase):
         result = self.client.post('api/post', headers=headers, data='{"title":"Text Title","text":"Changed"}')
         self.assertEqual(result.status_code, 201)
 
-    """def test_api_new_comment(self):
-        Test API new comment
-        self._insert_user('test', 'test', 'default')
-        headers = {'content-type':'application/json'}
-        result = self.client.post('/auth/api', headers=headers,data='{"username":"test","password":"test"}')
-        access_token = json.loads(result.data)['access_token']
-        headers['Authorization'] = "Bearer %s" % access_token
-        result = self.client.post('api/post', headers=headers, data='{"title":"Text Title","text":"Changed"}')
-        self.assertEqual(result.status_code, 201)
-        """
-
 if __name__ == '__main__':
     unittest.main()

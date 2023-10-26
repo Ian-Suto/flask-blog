@@ -17,8 +17,8 @@
                 {% if current_user.is_authenticated %}
                 {{ render_nav_item('blog.followed_posts', _('Followed Posts')) }}
                 {{ render_nav_item('auth.logout', _('Logout')) }}
-                {{ render_nav_item('auth.user_profiles', 'User Profiles') }}
-                {{ render_nav_item('auth.edit_profile', "Edit Profile") }}
+                {{ render_nav_item('auth.user_profiles', _('User Profiles')) }}
+                {{ render_nav_item('auth.edit_profile', _("Edit Profile")) }}
                 {% else %}
                 {{ render_nav_item('auth.login', _('Login')) }}
                 {{ render_nav_item('auth.register', _('Register')) }}

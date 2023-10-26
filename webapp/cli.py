@@ -19,6 +19,17 @@ fake_users = [
 fake_roles = ['default', 'poster', 'admin']
 
 def generate_tags(n):
+    """
+    Generate a list of tags with random names.
+
+    Args:
+        n (int): The number of tags to generate.
+
+    Returns:
+        list: A list of Tag objects.
+
+    This function generates a list of tags with random names and stores them in the database.
+    """
     tags = list()
     for i in range(n):
         tag_title = faker.color_name()
@@ -38,6 +49,14 @@ def generate_tags(n):
     return tags
 
 def generate_roles():
+    """
+    Generate roles from a predefined list of role names.
+
+    Returns:
+        list: A list of Role objects.
+
+    This function generates Role objects from a predefined list of role names and stores them in the database.
+    """
     roles = list()
     for rolename in fake_roles:
         role = Role.query.filter_by(name=rolename).first()
@@ -118,9 +137,22 @@ def generate_comments(users, posts):
 
 
 def register(app):
+    """
+    Register custom command-line commands for the Flask application.
+
+    Args:
+        app: The Flask application.
+
+    This function registers custom command-line commands using Flask's CLI interface.
+    """
 
     @app.cli.command('test-data')
     def test_data():
+        """
+        Generate test data for roles, users, posts, tags, and comments.
+
+        This command generates test data for roles, users, posts, tags, and comments and inserts it into the database.
+        """
         generate_roles()
         users = generate_users()
         tags = generate_tags(5)

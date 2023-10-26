@@ -7,24 +7,7 @@
             <h1 class="text-center">Register</h1>
             {{ render_form(form) }}
             <hr>
-            <h2 class="text-center">Register With OpenID</h2>
-            <form method="POST" action="{{ url_for('.register') }}">
-                {{ openid_form.hidden_tag() }}
-                <div class="form-group">
-                    {{ openid_form.openid.label }}
-                    {% if openid_form.openid.errors %}
-                        {% for e in openid_form.openid.errors %}
-                            <p class="help-block">{{ e }}</p>
-                        {% endfor %}
-                    {% endif %}
-                    {{ openid_form.openid(class_='form-control') }}
-                </div>
-                <input class="btn btn-primary" type="submit" value="Register">
-            </form>
-            <h2 class="text-center">Register With google</h2>
             <a href="{{ url_for('google.login') }}">Login via Google</a>
-
-            <h2 class="text-center">Register With github</h2>
             <a href="{{ url_for('github.login') }}">Login via Github</a>
         </div>
     </div>

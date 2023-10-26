@@ -51,6 +51,24 @@ class PostApi(Resource):
     @marshal_with(post_fields)
     @jwt_required()
     def get(self, post_id=None):
+        """
+        Get a post by its ID or a list of posts.
+
+        Args:
+            post_id (int): The ID of the post to retrieve. Defaults to None.
+
+        Returns:
+            Post or list of Post: The requested post(s).
+
+        Raises:
+            404: If the post with the given ID is non-existent.
+
+        400: If 'page' or 'user' args are invalid.
+
+        401: If authentication is required.
+
+        403: If trying to edit a post not created by the current user.
+        """
         if post_id:
             post = Post.query.get(post_id)
             if not post:
@@ -77,6 +95,17 @@ class PostApi(Resource):
     
     @jwt_required()
     def post(self):
+        """
+        Create a new post.
+
+        Returns:
+            dict: A dictionary containing the ID of the newly created post.
+
+        Raises:
+            400: If the request is missing required arguments.
+
+            401: If authentication is required.
+        """
         args = post_post_parser.parse_args(strict=True)
         new_post = Post(args['title'])
         new_post.user_id = get_jwt_identity()
@@ -92,6 +121,22 @@ class PostApi(Resource):
     
     @jwt_required()
     def put(self, post_id=None):
+        """
+        Update an existing post.
+
+        Args:
+            post_id (int): The ID of the post to update. Defaults to None.
+
+        Returns:
+            dict: A dictionary containing the ID of the updated post.
+
+        Raises:
+            400: If the 'post_id' is not provided.
+
+            401: If authentication is required.
+
+            403: If trying to edit a post not created by the current user.
+        """
         if not post_id:
             abort(400, message="Post id required...")
         post = Post.query.get(post_id)
@@ -113,6 +158,24 @@ class PostApi(Resource):
     
     @jwt_required()
     def delete(self, post_id=None):
+        """
+        Delete an existing post.
+
+        Args:
+            post_id (int): The ID of the post to delete. Defaults to None.
+
+        Returns:
+            str: An empty string.
+
+        Raises:
+            400: If the 'post_id' is not provided.
+
+            401: If authentication is required.
+
+            404: If the post with the given ID is non-existent.
+
+            403: If trying to delete a post not created by the current user.
+        """
         if not post_id:
             abort(400, message="Post id required...")
         post = Post.query.get(post_id)
@@ -129,6 +192,23 @@ class CommentApi(Resource):
     @marshal_with(comment_fields)
     @jwt_required()
     def get(self, comment_id=None, post_id=None):
+        """
+        Get a comment by its ID, a list of comments, or comments for a specific post or user.
+
+        Args:
+            comment_id (int): The ID of the comment to retrieve. Defaults to None.
+            post_id (int): The ID of the post to retrieve comments for. Defaults to None.
+
+        Returns:
+            Comment or list of Comment: The requested comment(s).
+
+        Raises:
+            400: If 'page' or 'user' args are invalid.
+
+            401: If authentication is required.
+
+            403: If trying to edit a comment not created by the current user.
+        """
         if comment_id:
             comment = Comment.query.get(comment_id)
             if not comment:
@@ -164,6 +244,20 @@ class CommentApi(Resource):
     
     @jwt_required()
     def post(self, post_id=None):
+        """
+        Create a new comment for a specific post.
+
+        Args:
+            post_id (int): The ID of the post to add a comment to. Defaults to None.
+
+        Returns:
+            dict: A dictionary containing the ID of the newly created comment.
+
+        Raises:
+            400: If the 'post_id' is not provided or if the request is missing required arguments.
+
+            401: If authentication is required.
+        """
         if not post_id:
             abort(400, message="Post id required...")
         post = Post.query.get(post_id)
@@ -183,6 +277,22 @@ class CommentApi(Resource):
 
     @jwt_required()
     def put(self, comment_id=None):
+        """
+        Update an existing comment.
+
+        Args:
+            comment_id (int): The ID of the comment to update. Defaults to None.
+
+        Returns:
+            dict: A dictionary containing the ID of the updated comment.
+
+        Raises:
+            400: If the 'comment_id' is not provided.
+
+            401: If authentication is required.
+
+            403: If trying to edit a comment not created by the current user.
+        """
         if not comment_id:
             abort(400, message="Comment id required...")
         comment = Comment.query.get(comment_id)
@@ -202,6 +312,24 @@ class CommentApi(Resource):
     
     @jwt_required()
     def delete(self, comment_id=None):
+        """
+        Delete an existing comment.
+
+        Args:
+            comment_id (int): The ID of the comment to delete. Defaults to None.
+
+        Returns:
+            str: An empty string.
+
+        Raises:
+            400: If the 'comment_id' is not provided.
+
+            401: If authentication is required.
+
+            404: If the comment with the given ID is non-existent.
+
+            403: If trying to delete a comment not created by the current user.
+        """
         if not comment_id:
             abort(400, message='Comment id required...')
         comment = Comment.query.get(comment_id)

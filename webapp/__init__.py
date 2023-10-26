@@ -22,6 +22,22 @@ cache = Cache()
 moment = Moment()
 
 def create_app(object_name):
+    """
+    Create and configure a Flask application.
+
+    This function initializes and configures a Flask application with various
+    extensions and modules. It sets up routes and configurations based on the
+    provided `object_name`.
+
+    Args:
+        object_name (str): The name of the configuration object to use.
+
+    Returns:
+        Flask: The configured Flask application instance.
+
+    Example usage:
+    app = create_app('config.DevelopmentConfig')
+    """
     load_dotenv()
     app = Flask(__name__)
     app.config.from_object(object_name)
