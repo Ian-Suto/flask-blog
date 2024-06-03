@@ -5,7 +5,7 @@ This is a Blogging application developed with Python and the Flask microframewor
 ## Installation
 Install the project with 
 ```bash
-  $ git clone https://github.com/Ian-Musima/flask-blog.git
+  $ git clone https://github.com/Ian-Suto/flask-blog.git
   $ python -m venv env
   $ source env/Scripts/activate
   $ ./init.sh
